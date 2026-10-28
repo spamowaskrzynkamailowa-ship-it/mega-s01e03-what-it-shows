@@ -32,12 +32,14 @@ engineering issues.
 Tenants whose locale writes the day before the month are affected when a date reaches the
 shared parser. The parser reads the month first, so day and month trade places. This group
 includes app and email reports, plus form reports that do not use the conflicting v3 form.
+Tracked in [issue #1](https://github.com/spamowaskrzynkamailowa-ship-it/mega-s01e03-what-it-shows/issues/1).
 
 ## Cause 2: the v3 form contradicts day-first tenants
 
 The v3 form displays `MM/DD/YYYY`, while these tenants use a day-first locale. A person
 following the form's hint can submit a date that the tenant-side parser reads in the opposite
 order. These form reports are a separate problem from the shared-parser failures above.
+Tracked in [issue #2](https://github.com/spamowaskrzynkamailowa-ship-it/mega-s01e03-what-it-shows/issues/2).
 
 ## What was merged
 
