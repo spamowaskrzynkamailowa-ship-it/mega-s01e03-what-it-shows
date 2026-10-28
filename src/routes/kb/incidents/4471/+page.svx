@@ -41,6 +41,12 @@ following the form's hint can submit a date that the tenant-side parser reads in
 order. These form reports are a separate problem from the shared-parser failures above.
 Tracked in [issue #2](https://github.com/spamowaskrzynkamailowa-ship-it/mega-s01e03-what-it-shows/issues/2).
 
+## Engineering outcome
+
+The desk closed #4471 on 5 October. Engineering fixed the shared parser with
+`fix(dates): parse dd/mm for eu locales`. The v3-form issue will not be fixed because
+`booking-v3` was retired.
+
 ## What was merged
 
 <CauseTable ticket={4471} />
