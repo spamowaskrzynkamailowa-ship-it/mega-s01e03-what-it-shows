@@ -4,14 +4,12 @@ title: '#4471 · two causes behind date flips'
 owner: support desk
 status: known
 reviewed: 2026-10-28
-signature: 'Maciej Prądzyński'
 ---
 
 <script>
   import CauseTable from '#lib/kb/CauseTable.svelte';
   import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
   import Callout from '#lib/kb/Callout.svelte';
-  import RenderStamp from '#lib/kb/RenderStamp.svelte';
 </script>
 
 Since April, people have told us their bookings land on the wrong day. The export contains
@@ -66,4 +64,3 @@ the symptom alone does not establish a third cause.
 - Count unique report IDs and group by tenant configuration plus channel, not by intake tag.
 - Keep one summary page for the incident, then track one engineering issue per cause.
 
-<RenderStamp {signature} />
