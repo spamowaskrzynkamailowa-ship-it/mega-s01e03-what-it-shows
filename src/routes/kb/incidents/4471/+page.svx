@@ -1,0 +1,59 @@
+---
+layout: runbook
+title: '#4471 · two causes behind date flips'
+owner: support desk
+status: known
+reviewed: 2026-10-28
+signature: 'Maciej Prądzyński'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import QueueTimeline from '#lib/kb/QueueTimeline.svelte';
+  import Callout from '#lib/kb/Callout.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+Since April, people have told us their bookings land on the wrong day. The export contains
+overlapping pages, so count each report ID once. The desk merged those reports into #4471
+by subject; that merge did not mean they all had the same cause.
+
+Use each report's tenant configuration and channel to identify the cause. The intake tag is
+only a guess and does not reliably identify the failure. The table below computes the counts
+from the export and shows how the desk's current rules place each group.
+
+<Callout>
+Known incident. The merged ticket contains two distinct date-parsing problems and needs two
+engineering issues.
+</Callout>
+
+## Cause 1: the shared parser flips day-first dates
+
+Tenants whose locale writes the day before the month are affected when a date reaches the
+shared parser. The parser reads the month first, so day and month trade places. This group
+includes app and email reports, plus form reports that do not use the conflicting v3 form.
+
+## Cause 2: the v3 form contradicts day-first tenants
+
+The v3 form displays `MM/DD/YYYY`, while these tenants use a day-first locale. A person
+following the form's hint can submit a date that the tenant-side parser reads in the opposite
+order. These form reports are a separate problem from the shared-parser failures above.
+
+## What was merged
+
+<CauseTable ticket={4471} />
+
+The five reports noted as one-day moves remain assigned by tenant configuration in the table;
+the symptom alone does not establish a third cause.
+
+## Since April
+
+<QueueTimeline ticket={4471} />
+
+## Triage lesson
+
+- Matching subjects is useful for finding related reports, but it can hide separate causes.
+- Count unique report IDs and group by tenant configuration plus channel, not by intake tag.
+- Keep one summary page for the incident, then track one engineering issue per cause.
+
+<RenderStamp {signature} />
