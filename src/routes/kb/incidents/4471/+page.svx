@@ -51,6 +51,8 @@ The desk closed #4471 on 5 October. Engineering fixed the shared parser with
 
 <CauseTable ticket={4471} />
 
+See the signed [analysis of the two causes and their outcomes](/kb/incidents/4471/causes).
+
 The five reports noted as one-day moves remain assigned by tenant configuration in the table;
 the symptom alone does not establish a third cause.
 

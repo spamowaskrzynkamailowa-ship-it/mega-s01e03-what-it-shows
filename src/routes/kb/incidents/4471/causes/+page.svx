@@ -1,0 +1,47 @@
+---
+layout: runbook
+title: '#4471 · date parsing causes and outcomes'
+owner: support desk
+status: known
+reviewed: 2026-10-28
+signature: 'Maciej Prądzyński'
+---
+
+<script>
+  import CauseTable from '#lib/kb/CauseTable.svelte';
+  import RenderStamp from '#lib/kb/RenderStamp.svelte';
+</script>
+
+## Why #4471 needed two tickets
+
+The desk merged reports by subject, but matching subjects did not mean every report had the
+same cause. The export contains overlapping rows, so the cause table counts each report ID
+once and uses the tenant's locale, booking form and report channel. Intake tags are guesses.
+
+## Cause 1: the shared parser flips day-first dates
+
+The shared parser reads month first. For day-first tenants, dates can therefore land on the
+wrong day. The export's one-day-move reports still belong to this cause under the tenant
+rules. Track this cause in [issue #1](https://github.com/spamowaskrzynkamailowa-ship-it/mega-s01e03-what-it-shows/issues/1).
+
+## Cause 2: booking-v3 gives day-first tenants a conflicting hint
+
+The v3 form displays `MM/DD/YYYY` for tenants whose locale writes day first. A customer can
+follow that hint while the tenant-side parser reads the date in the opposite order. Track it
+separately in [issue #2](https://github.com/spamowaskrzynkamailowa-ship-it/mega-s01e03-what-it-shows/issues/2).
+
+## Counts from the export
+
+<CauseTable ticket={4471} />
+
+The table de-duplicates by report ID and groups from tenant configuration and channel. The
+five reports noted as one-day moves remain in the parser group; they do not establish a third
+cause.
+
+## Engineering outcome
+
+The desk closed #4471 on 5 October. Engineering fixed the shared parser with
+`fix(dates): parse dd/mm for eu locales`. The v3-form issue will not be fixed because
+`booking-v3` was retired.
+
+<RenderStamp {signature} />
